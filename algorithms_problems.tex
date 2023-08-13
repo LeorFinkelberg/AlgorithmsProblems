@@ -1,0 +1,88 @@
+\documentclass[%
+	11pt,
+	a4paper,
+	utf8,
+	%twocolumn
+		]{article}	
+
+\usepackage{style_packages/podvoyskiy_article_extended}
+
+
+\begin{document}
+\title{Задачи по теории алгоритмов и структурами данных}
+
+\author{}
+
+\date{}
+\maketitle
+
+\thispagestyle{fancy}
+
+\tableofcontents
+
+\section{Задача two-sums (Easy)}
+
+\url{https://leetcode.com/problems/two-sum/description/} Дана коллекция целых чисел \verb|nums| и целое число \verb|target|. Требуется вернуть коллекцию индексов, сумма элементов которых совпадает со значением \verb|target|.
+
+То есть, если \verb|nums = [2, 7, 11, 15]| и \verb|target=9|, то возвращается \verb|[0, 1]|, так как 
+
+\verb|nums[0] + nums[1] = 9|.
+
+Мое решение с использованием средств Python
+\begin{lstlisting}[
+style = ironpython,
+numbers = none
+]
+import itertools
+
+def two_sum(self, nums: List[int], target: int) -> List[int]:
+	for num_left, num_right in itertools.combinations(nums, 2):
+		if num_left + num_right == target:
+			if num_left != num_right:
+				return [nums.index(num_left), nums.index(num_right)]
+			else:
+				left_index = nums.index(num_left)
+				right_index = nums[left_index + 1:].index(num_left) + left_index + 1
+				return [left_index, right_index]
+\end{lstlisting}
+
+Это решение с точки зрения потребления памяти оказалось лучше 76,89\% предложенных решений (ничего удивительного, так как используются генераторы), но с точки зрения временных издержек лучше только 36.37\% предложенных решений.
+
+Было еще вот такое решение
+\begin{lstlisting}[
+style = ironpython,
+numbers = none
+]
+def two_sum(self, nums: List[int], target: int) -> List[int]:
+	elem_to_idx = {}
+	for idx, elem in enumerate(nums):
+		diff = target - elem
+		if diff in elem_to_idx:
+			return [elem_to_idx[diff], idx]
+			
+		elem_to_idx[elem] = idx
+\end{lstlisting}
+
+Оно лучше по времени (42,88\%), но значительно хуже с точки зрения потребления памяти (5,76\%). Кроме того, на мой взгляд код гораздо труднее для понимания.
+
+
+% Источники в "Газовой промышленности" нумеруются по мере упоминания 
+\begin{thebibliography}{99}\addcontentsline{toc}{section}{Список литературы}
+	\bibitem{beazley:python-2010}{\emph{Бизли Д.} Python. Подробный справочник. -- СПб.: Символ-Плюс, 2010. -- 864 с.}
+	
+	\bibitem{beazley:python_cookbook-2019}{\emph{Бизли Д.} Python. Книга рецептов. -- М.: ДМК Пресс., 2019. -- 648 с.}
+
+    \bibitem{mckinney:pandas-2015}{\emph{Маккинли У.} Python и анализ данных, 2015. -- 482 с.}
+	
+	\bibitem{ramalho:python-2022}{\emph{Рамальо Л.} Python -- к вершинам мастерства: Лаконичное и эффективное программирование. -- М.: МК Пресс, 2022. -- 898 с.}
+	
+	\bibitem{heydt:pandas-2019}{\emph{Хейдт М., Груздев А.} Изучаем pandas. -- М.: ДМК Пресс, 2019. -- 682 с.}
+	
+	\bibitem{hostmann:scala-2013}{\emph{Хостманн К.} Scala для нетерпеливых. -- М.: ДМК Пресс, 2013. -- 408 с.}
+\end{thebibliography}
+
+%\listoffigures\addcontentsline{toc}{section}{Список иллюстраций}
+
+%\lstlistoflistings\addcontentsline{toc}{section}{Список листингов}
+
+\end{document}
