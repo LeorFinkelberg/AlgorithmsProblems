@@ -22,7 +22,7 @@
 
 \section{Задача two-sums (Easy)}
 
-\url{https://leetcode.com/problems/two-sum/description/} Дана коллекция целых чисел \verb|nums| и целое число \verb|target|. Требуется вернуть коллекцию индексов, сумма элементов которых совпадает со значением \verb|target|.
+\noindent\url{https://leetcode.com/problems/two-sum/description/} Дана коллекция целых чисел \verb|nums| и целое число \verb|target|. Требуется вернуть коллекцию индексов, сумма элементов которых совпадает со значением \verb|target|.
 
 То есть, если \verb|nums = [2, 7, 11, 15]| и \verb|target=9|, то возвращается \verb|[0, 1]|, так как 
 
@@ -64,6 +64,32 @@ def two_sum(self, nums: List[int], target: int) -> List[int]:
 \end{lstlisting}
 
 Оно лучше по времени (42,88\%), но значительно хуже с точки зрения потребления памяти (5,76\%). Кроме того, на мой взгляд код гораздо труднее для понимания.
+
+\section{Задача Longest Common Prefix (Easy)}
+
+\noindent\url{https://leetcode.com/problems/longest-common-prefix/description/} Требуется написать функцию, которая возвращает наибольший общий префикс для коллекции строк. Если префикс пустой, то следует вернуть пустую строку.
+
+Решение
+\begin{lstlisting}[
+style = ironpython,
+numbers = none
+]
+import typing as t
+
+def longest_common_prefix(strs: t.List[str]) -> str:
+    chars: t.List[str] = []
+    shortest_word = min(strs, key=len)
+    for idx, char in enumerate(shortest_word):
+        _chars = set(word[idx] for word in strs)
+        if len(_chars) == 1:
+            chars.append(char)
+        else:
+            break
+    
+    return "".join(chars)
+\end{lstlisting}
+
+
 
 
 % Источники в "Газовой промышленности" нумеруются по мере упоминания 
